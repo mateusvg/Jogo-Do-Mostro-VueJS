@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Matador de Monstro</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600" rel="stylesheet">
+    <script src="https://unpkg.com/vue"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div class="panel scores">
+            <div class="score">
+                <h1>Jogador</h1>
+                <img src="https://img1.gratispng.com/20180325/gee/kisspng-playstation-4-joystick-playstation-3-game-controll-joystick-5ab72ee27a7e67.6136780815219545305017.jpg" width="170" height="160">
+                <div class="life-bar">
+                    <div class="life" :style="{width: lifeJogadorConvertido()}"></div>
+                </div>
+                <div class="coracao">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Beating_Heart.gif" width="50" height="50"> {{jogadorLife}}
+                </div>
+                <div></div>
+            </div>
+            <div class="score">
+                <h1>Monstro</h1>
+                <img src="http://cdn5.colorir.com/desenhos/color/201632/monstro-com-um-olho-monstros-1283677.jpg" width="230" height="160">
+                <div class="life-bar">
+                    <div class="life" :style="{width: lifeConvertido()}"></div>
+
+                </div>
+                <div class="coracao">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Beating_Heart.gif" width="50" height="50"> {{mostroLife}}
+                </div>
+                <div></div>
+            </div>
+        </div>
+        <div class="panel result" v-show="resultado">
+            <div class="win" v-if="mostroDerrotado">Você ganhou!!! :)</div>
+            <div class="lose" v-else="jogadorDerrotado">Você perdeu! :( </div>
+        </div>
+        <div class="panel buttons">
+            <template v-if="!iniciar">
+                <button class="btn attack" @click="atacar()" v-show="fimjogo">Ataque</button>
+                <button class="btn especial-attack" v-if="ataqueEspecialMostrar" v-show="fimjogo" @click="ataqueEspecial()">Ataque
+                    Especial</button>
+                <button class="btn heal" @click="curar()" v-show="fimjogo">Curar</button>
+                <button class="btn give-up" @click="desistir()">{{condicao ? 'Desistir' : 'Iniciar Novamente'}}</button>
+            </template>
+            <button class="btn new-game" v-else="iniciar" @click="iniciar = !iniciar">Iniciar Jogo</button>
+        </div>
+        <div class="panel logs" v-show="!iniciar">
+            <ul v-show="pontos">
+                <li>Jogador: {{ataqueJogador}}</li>
+                <li>Mostro: {{ataqueMostro}}</li>
+            </ul>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+
+</html>
